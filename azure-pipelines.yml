@@ -44,7 +44,7 @@ stages:
        displayName: Deploy to AKS
        environment: 'k8sdev.default'
        pool: 
-      vmImage: ubuntu-latest
+        vmImage: ubuntu-latest
     strategy:
       runOnce:
         deploy:
