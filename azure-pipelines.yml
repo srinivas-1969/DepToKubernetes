@@ -25,7 +25,6 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
         tags: |
           $(tag)
-          latest
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Pipeline.Workspace)/s/kubernetes'
@@ -37,6 +36,8 @@ stages:
   dependsOn: Build
   variables:
     acrsecret: k8sexamplesacrauth
+    acrdevurl: 'sk8sexamplesacr.azurecr.io'
+    replicaNo: 3
   jobs:
     - deployment: Deploy
       displayName: Deploy to AKS
@@ -67,3 +68,4 @@ stages:
                 targetPath: 
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
+              containers: '$(acrdevurl)/$(imageRepo):$(tag)'
